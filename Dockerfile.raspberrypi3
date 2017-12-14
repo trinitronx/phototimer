@@ -1,0 +1,14 @@
+FROM alexellis2/raspistill:latest
+
+RUN apt-get update -qy && apt-get install -qy python && apt-get remove --purge -y $(apt-mark showauto | grep -v 'libexpat1\|libffi6\|libpython\|libsqlite\|mime-support\|python') && rm -rf /var/lib/apt/lists/*
+
+#RUN apk update && apk add raspberrypi v4l-utils && rm -rf /var/cache/apk/*
+#RUN modprobe bcm2835-v4l2 && v4l2-ctl --overlay=1
+#RUN git clone https://github.com/alexellis/phototimer /app/
+WORKDIR /app/
+COPY . /app/
+
+VOLUME /var/image/
+
+ENTRYPOINT []
+CMD ["python", "take.py", "60"]
